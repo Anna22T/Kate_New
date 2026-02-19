@@ -13,11 +13,10 @@
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { background:var(--black); color:var(--white); font-family:'Josefin Sans',sans-serif; font-weight:300; min-height:100vh; overflow-x:hidden; }
-body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events:none; z-index:9000; }
 
 /* NAV */
 nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-items:center; justify-content:space-between; padding:1.1rem 3rem; background:rgba(6,4,7,0.92); backdrop-filter:blur(16px); border-bottom:1px solid rgba(232,23,93,0.15); }
-.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; color:var(--gold); cursor:pointer; text-shadow:0 0 20px rgba(201,169,110,0.3); user-select:none; }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; font-style:italic; color:var(--gold); cursor:pointer; user-select:none; }
 .nav-links { display:flex; align-items:center; list-style:none; }
 .nav-links li a, .nav-links li button { display:inline-flex; align-items:center; gap:5px; background:none; border:none; color:var(--muted); font-family:'Josefin Sans',sans-serif; font-weight:100; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; text-decoration:none; cursor:pointer; padding:0.5rem 1.1rem; transition:color 0.3s; white-space:nowrap; }
 .nav-links li a:hover, .nav-links li button:hover, .nav-links li a.active { color:var(--pink); }
@@ -33,20 +32,17 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 .page.active { display:block; }
 
 /* HERO */
-.hero { position:relative; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
-.hero-mosaic { position:absolute; inset:0; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(3,1fr); gap:3px; opacity:0.4; filter:saturate(0.7) brightness(0.5); transform:scale(1.05); }
-.hero-mosaic .mc { background-size:cover; background-position:center; }
-.hero-overlay { position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(232,23,93,0.22) 0%,transparent 65%),linear-gradient(to bottom,rgba(6,4,7,0.55) 0%,rgba(6,4,7,0.1) 40%,rgba(6,4,7,0.1) 60%,rgba(6,4,7,0.85) 100%),linear-gradient(to right,rgba(6,4,7,0.5) 0%,transparent 30%,transparent 70%,rgba(6,4,7,0.5) 100%); }
-.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(232,23,93,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,23,93,0.04) 1px,transparent 1px); background-size:80px 80px; }
+.hero { position:relative; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding-top:64px; }
+.hero-mosaic { position:absolute; inset:0; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(3,1fr); gap:3px; }
+.hero-mosaic .mc { background-size:cover; background-position:center; background-color:#1a0010; }
+.hero-overlay { position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(232,23,93,0.22) 0%,transparent 65%),linear-gradient(to bottom,rgba(6,4,7,0.6) 0%,rgba(6,4,7,0.15) 40%,rgba(6,4,7,0.15) 60%,rgba(6,4,7,0.88) 100%); }
 .hero-content { position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; animation:fadeUp 1.6s ease both; }
 .hero-eyebrow { font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); margin-bottom:1.8rem; opacity:0.8; }
-.hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(5rem,14vw,11rem); font-weight:300; font-style:italic; line-height:0.88; text-shadow:0 0 80px rgba(232,23,93,0.35),0 2px 40px rgba(0,0,0,0.8); }
+.hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(5rem,14vw,11rem); font-weight:300; font-style:italic; line-height:0.88; text-shadow:0 0 80px rgba(232,23,93,0.35); }
 .hero-title .accent { color:var(--pink); font-weight:600; }
 .hero-sub { font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,3vw,1.5rem); font-weight:300; font-style:italic; color:rgba(247,238,242,0.5); margin-top:1.4rem; }
 .hero-divider { width:1px; height:60px; background:linear-gradient(to bottom,transparent,var(--pink),transparent); margin:2.5rem auto; opacity:0.7; }
 .hero-cta { display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; }
-.scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); z-index:10; display:flex; flex-direction:column; align-items:center; gap:0.6rem; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); animation:pulse 3s ease infinite; }
-.scroll-hint::before { content:''; display:block; width:1px; height:40px; background:linear-gradient(to bottom,transparent,var(--muted)); }
 
 /* BUTTONS */
 .btn { font-family:'Josefin Sans',sans-serif; font-weight:400; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; border:none; cursor:pointer; transition:all 0.3s; }
@@ -58,12 +54,12 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 
 /* PAGE BANNER */
 .page-banner { position:relative; height:42vh; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding-bottom:3rem; overflow:hidden; margin-top:64px; }
-.banner-mosaic { position:absolute; inset:0; display:grid; grid-template-columns:repeat(5,1fr); gap:2px; filter:saturate(0.6) brightness(0.35); transform:scale(1.03); }
-.banner-mosaic .bc { background-size:cover; background-position:center; }
-.banner-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(6,4,7,0.3) 0%,rgba(6,4,7,0.88) 100%),radial-gradient(ellipse 60% 70% at 50% 80%,rgba(232,23,93,0.18) 0%,transparent 70%); }
+.banner-mosaic { position:absolute; inset:0; display:grid; grid-template-columns:repeat(5,1fr); gap:2px; filter:brightness(0.35); }
+.banner-mosaic .bc { background-size:cover; background-position:center; background-color:#1a0010; }
+.banner-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(6,4,7,0.3) 0%,rgba(6,4,7,0.88) 100%); }
 .banner-content { position:relative; z-index:5; text-align:center; }
 .page-tag { display:inline-block; font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--pink); border:1px solid rgba(232,23,93,0.4); padding:0.25rem 0.8rem; margin-bottom:1rem; }
-.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,8vw,6rem); font-weight:300; font-style:italic; line-height:1; text-shadow:0 0 40px rgba(232,23,93,0.3); }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,8vw,6rem); font-weight:300; font-style:italic; line-height:1; }
 .page-title em { color:var(--pink); font-weight:600; }
 
 /* GALLERY */
@@ -71,7 +67,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:4px; }
 .gallery-grid .wide { grid-column:span 2; }
 
-/* PHOTO CARDS — pure CSS background, no img tags */
+/* PHOTO CARDS */
 .photo-card { position:relative; overflow:hidden; cursor:zoom-in; background-size:cover; background-position:center; aspect-ratio:4/3; transition:filter 0.4s; }
 .photo-card.wide { aspect-ratio:16/7; }
 .photo-card.tall { aspect-ratio:3/4; }
@@ -80,6 +76,16 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 .photo-card:hover::after { opacity:1; }
 .card-caption { position:absolute; bottom:1rem; left:1.2rem; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(247,238,242,0.9); z-index:2; opacity:0; transform:translateY(5px); transition:all 0.3s; }
 .photo-card:hover .card-caption { opacity:1; transform:translateY(0); }
+
+/* PLACEHOLDER STYLE — shown when no background-image is set */
+.photo-card .ph {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem;
+  background:#1a0010;
+  border:1px dashed rgba(232,23,93,0.2);
+}
+.ph-title { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,23,93,0.5); }
+.ph-url { font-size:0.6rem; color:rgba(122,101,112,0.6); font-style:italic; }
 
 /* LOCKED */
 .locked-view { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:75vh; text-align:center; gap:1.5rem; padding:2rem; padding-top:100px; }
@@ -91,7 +97,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 /* MODAL */
 .modal-backdrop { display:none; position:fixed; inset:0; background:rgba(6,4,7,0.93); backdrop-filter:blur(12px); z-index:900; align-items:center; justify-content:center; }
 .modal-backdrop.open { display:flex; }
-.modal-box { background:var(--dark); border:1px solid rgba(232,23,93,0.25); box-shadow:0 0 100px rgba(232,23,93,0.15); padding:3.5rem; width:100%; max-width:420px; position:relative; animation:modalIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+.modal-box { background:var(--dark); border:1px solid rgba(232,23,93,0.25); padding:3.5rem; width:100%; max-width:420px; position:relative; animation:modalIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
 .modal-x { position:absolute; top:1.2rem; right:1.4rem; background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer; transition:color 0.2s; line-height:1; }
 .modal-x:hover { color:var(--pink); }
 .modal-eye { font-size:0.58rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--pink); margin-bottom:1rem; opacity:0.8; }
@@ -100,7 +106,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 .modal-desc { font-size:0.68rem; color:var(--muted); letter-spacing:0.05em; line-height:1.8; margin-bottom:2.2rem; }
 .field { margin-bottom:1.2rem; }
 .field label { display:block; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; }
-.field input { width:100%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); color:var(--white); font-family:'Josefin Sans',sans-serif; font-size:0.85rem; font-weight:300; padding:0.85rem 1rem; outline:none; transition:border-color 0.25s,box-shadow 0.25s; }
+.field input { width:100%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); color:var(--white); font-family:'Josefin Sans',sans-serif; font-size:0.85rem; font-weight:300; padding:0.85rem 1rem; outline:none; transition:border-color 0.25s; }
 .field input:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(232,23,93,0.1); }
 .modal-err { font-size:0.65rem; color:var(--pink); margin-bottom:1rem; display:none; }
 .modal-err.show { display:block; }
@@ -109,10 +115,10 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 /* LIGHTBOX */
 .lightbox { display:none; position:fixed; inset:0; z-index:2000; background:rgba(6,4,7,0.97); backdrop-filter:blur(20px); align-items:center; justify-content:center; cursor:zoom-out; }
 .lightbox.open { display:flex; }
-.lb-inner { position:relative; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; gap:1rem; cursor:default; animation:lbIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
-.lb-image { width:min(860px,88vw); height:min(640px,80vh); background-size:contain; background-repeat:no-repeat; background-position:center; box-shadow:0 0 120px rgba(232,23,93,0.2),0 40px 80px rgba(0,0,0,0.9); }
+.lb-inner { max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; gap:1rem; cursor:default; animation:lbIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+.lb-image { width:min(860px,88vw); height:min(640px,80vh); background-size:contain; background-repeat:no-repeat; background-position:center; box-shadow:0 0 120px rgba(232,23,93,0.2); }
 .lb-caption { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:rgba(247,238,242,0.55); text-align:center; }
-.lb-close { position:fixed; top:1.5rem; right:2rem; background:none; border:none; color:rgba(247,238,242,0.4); font-size:2rem; line-height:1; cursor:pointer; transition:color 0.2s; z-index:2001; }
+.lb-close { position:fixed; top:1.5rem; right:2rem; background:none; border:none; color:rgba(247,238,242,0.4); font-size:2rem; cursor:pointer; transition:color 0.2s; z-index:2001; }
 .lb-close:hover { color:var(--pink); }
 .lb-nav { position:fixed; top:50%; transform:translateY(-50%); background:rgba(232,23,93,0.12); border:1px solid rgba(232,23,93,0.25); color:var(--white); font-size:1.6rem; width:50px; height:50px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; z-index:2001; user-select:none; }
 .lb-nav:hover { background:rgba(232,23,93,0.3); }
@@ -124,11 +130,9 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
 .site-footer { border-top:1px solid rgba(232,23,93,0.1); padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; }
 .footer-logo { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--gold); opacity:0.6; }
 
-/* ANIMATIONS */
 @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-@keyframes modalIn { from { opacity:0; transform:scale(0.96) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+@keyframes modalIn { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
 @keyframes lbIn { from { opacity:0; transform:scale(0.93); } to { opacity:1; transform:scale(1); } }
-@keyframes pulse { 0%,100% { opacity:0.4; } 50% { opacity:0.9; } }
 
 @media(max-width:768px) {
   nav { padding:1rem 1.2rem; }
@@ -137,7 +141,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   .gallery-grid .wide { grid-column:span 1; }
   .gallery-grid { grid-template-columns:1fr 1fr; }
   .site-footer { flex-direction:column; gap:1rem; text-align:center; }
-  .modal-box { padding:2.5rem 1.8rem; margin:1rem; }
+  .modal-box { padding:2rem 1.5rem; margin:1rem; }
 }
 </style>
 </head>
@@ -163,25 +167,25 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   </ul>
 </nav>
 
-<!-- HOME -->
+<!-- ===== HOME ===== -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-mosaic">
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMTE0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAxYSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWMwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2MzNiYiIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzIyMDA0MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3MzM4OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzJhMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0MjJhYSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzE4MDAzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA2MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDYwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2UwMTA1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAyOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI2MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4MjI1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzI4MDAyMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M0MTU1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzUwMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTYwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="mc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk5MTEzMyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzM1MDAxNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBjMDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGMwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+      <!-- Replace background-image:url('') with your imgBB links in each cell below -->
+      <div class="mc" style="background-image:url('HERO_PHOTO_1')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_2')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_3')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_4')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_5')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_6')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_7')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_8')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_9')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_10')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_11')"></div>
+      <div class="mc" style="background-image:url('HERO_PHOTO_12')"></div>
     </div>
     <div class="hero-overlay"></div>
-    <div class="hero-grid"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Valentine's Day &middot; February 14</p>
       <h1 class="hero-title">For<br><span class="accent">Kate</span></h1>
@@ -192,19 +196,18 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
         <button class="btn btn-ghost" onclick="tryPrivate('memories','mod-memories')">Our Private World &#128274;</button>
       </div>
     </div>
-    <div class="scroll-hint">Scroll</div>
   </div>
 </div>
 
-<!-- EVENTS -->
+<!-- ===== EVENTS (PUBLIC) ===== -->
 <div class="page" id="page-events">
   <div class="page-banner">
     <div class="banner-mosaic">
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMTE0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAxYSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWMwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2UwMTA1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAyOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+      <div class="bc" style="background-image:url('EVENTS_BANNER_1')"></div>
+      <div class="bc" style="background-image:url('EVENTS_BANNER_2')"></div>
+      <div class="bc" style="background-image:url('EVENTS_BANNER_3')"></div>
+      <div class="bc" style="background-image:url('EVENTS_BANNER_4')"></div>
+      <div class="bc" style="background-image:url('EVENTS_BANNER_5')"></div>
     </div>
     <div class="banner-overlay"></div>
     <div class="banner-content">
@@ -214,12 +217,32 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   </div>
   <div class="gallery-section">
     <div class="gallery-grid">
-      <div class="photo-card wide" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">New Year's Eve</div></div>
-      <div class="photo-card tall" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">A night to remember</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMTE0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAxYSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWMwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Celebrations</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2MzNiYiIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzIyMDA0MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Together always</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Magic moments</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3MzM4OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzJhMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Rose-tinted evenings</div></div>
+      <!-- To add a photo: set style="background-image:url('YOUR_IMGBB_LINK')" on the photo-card div -->
+      <!-- To add more cards: copy any photo-card block and paste it here -->
+      <div class="photo-card wide" style="background-image:url('EVENTS_PHOTO_1')">
+        <div class="ph"><div class="ph-title">Events Photo 1</div><div class="ph-url">Replace EVENTS_PHOTO_1 with your imgBB URL</div></div>
+        <div class="card-caption">New Year's Eve</div>
+      </div>
+      <div class="photo-card tall" style="background-image:url('EVENTS_PHOTO_2')">
+        <div class="ph"><div class="ph-title">Events Photo 2</div><div class="ph-url">Replace EVENTS_PHOTO_2</div></div>
+        <div class="card-caption">A night to remember</div>
+      </div>
+      <div class="photo-card" style="background-image:url('EVENTS_PHOTO_3')">
+        <div class="ph"><div class="ph-title">Events Photo 3</div><div class="ph-url">Replace EVENTS_PHOTO_3</div></div>
+        <div class="card-caption">Celebrations</div>
+      </div>
+      <div class="photo-card" style="background-image:url('EVENTS_PHOTO_4')">
+        <div class="ph"><div class="ph-title">Events Photo 4</div><div class="ph-url">Replace EVENTS_PHOTO_4</div></div>
+        <div class="card-caption">Together always</div>
+      </div>
+      <div class="photo-card" style="background-image:url('EVENTS_PHOTO_5')">
+        <div class="ph"><div class="ph-title">Events Photo 5</div><div class="ph-url">Replace EVENTS_PHOTO_5</div></div>
+        <div class="card-caption">Magic moments</div>
+      </div>
+      <div class="photo-card" style="background-image:url('EVENTS_PHOTO_6')">
+        <div class="ph"><div class="ph-title">Events Photo 6</div><div class="ph-url">Replace EVENTS_PHOTO_6</div></div>
+        <div class="card-caption">Rose-tinted evenings</div>
+      </div>
     </div>
   </div>
   <div class="site-footer">
@@ -228,15 +251,15 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   </div>
 </div>
 
-<!-- ADVENTURES -->
+<!-- ===== ADVENTURES (PUBLIC) ===== -->
 <div class="page" id="page-adventures">
   <div class="page-banner">
     <div class="banner-mosaic">
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2MzNiYiIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzIyMDA0MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3MzM4OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzJhMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0MjJhYSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzE4MDAzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA2MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDYwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-      <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI2MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4MjI1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzI4MDAyMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+      <div class="bc" style="background-image:url('ADV_BANNER_1')"></div>
+      <div class="bc" style="background-image:url('ADV_BANNER_2')"></div>
+      <div class="bc" style="background-image:url('ADV_BANNER_3')"></div>
+      <div class="bc" style="background-image:url('ADV_BANNER_4')"></div>
+      <div class="bc" style="background-image:url('ADV_BANNER_5')"></div>
     </div>
     <div class="banner-overlay"></div>
     <div class="banner-content">
@@ -246,12 +269,30 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   </div>
   <div class="gallery-section">
     <div class="gallery-grid">
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Wandering together</div></div>
-      <div class="photo-card wide" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0MjJhYSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzE4MDAzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA2MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDYwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Golden hour</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2UwMTA1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAyOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">On top of the world</div></div>
-      <div class="photo-card tall" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI2MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4MjI1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzI4MDAyMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">By the sea</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M0MTU1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzUwMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTYwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">In bloom</div></div>
-      <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk5MTEzMyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzM1MDAxNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBjMDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGMwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">City nights</div></div>
+      <div class="photo-card" style="background-image:url('ADV_PHOTO_1')">
+        <div class="ph"><div class="ph-title">Adventures Photo 1</div><div class="ph-url">Replace ADV_PHOTO_1</div></div>
+        <div class="card-caption">Wandering together</div>
+      </div>
+      <div class="photo-card wide" style="background-image:url('ADV_PHOTO_2')">
+        <div class="ph"><div class="ph-title">Adventures Photo 2</div><div class="ph-url">Replace ADV_PHOTO_2</div></div>
+        <div class="card-caption">Golden hour</div>
+      </div>
+      <div class="photo-card" style="background-image:url('ADV_PHOTO_3')">
+        <div class="ph"><div class="ph-title">Adventures Photo 3</div><div class="ph-url">Replace ADV_PHOTO_3</div></div>
+        <div class="card-caption">On top of the world</div>
+      </div>
+      <div class="photo-card tall" style="background-image:url('ADV_PHOTO_4')">
+        <div class="ph"><div class="ph-title">Adventures Photo 4</div><div class="ph-url">Replace ADV_PHOTO_4</div></div>
+        <div class="card-caption">By the sea</div>
+      </div>
+      <div class="photo-card" style="background-image:url('ADV_PHOTO_5')">
+        <div class="ph"><div class="ph-title">Adventures Photo 5</div><div class="ph-url">Replace ADV_PHOTO_5</div></div>
+        <div class="card-caption">In bloom</div>
+      </div>
+      <div class="photo-card" style="background-image:url('ADV_PHOTO_6')">
+        <div class="ph"><div class="ph-title">Adventures Photo 6</div><div class="ph-url">Replace ADV_PHOTO_6</div></div>
+        <div class="card-caption">City nights</div>
+      </div>
     </div>
   </div>
   <div class="site-footer">
@@ -260,7 +301,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   </div>
 </div>
 
-<!-- MEMORIES (PROTECTED) -->
+<!-- ===== MEMORIES (PROTECTED) ===== -->
 <div class="page" id="page-memories">
   <div id="memories-lock" class="locked-view">
     <div class="lock-glyph">&#128274;</div>
@@ -271,29 +312,44 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   <div id="memories-open" style="display:none">
     <div class="page-banner">
       <div class="banner-mosaic">
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2UwMTA1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAyOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMTE0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAxYSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWMwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+        <div class="bc" style="background-image:url('MEM_BANNER_1')"></div>
+        <div class="bc" style="background-image:url('MEM_BANNER_2')"></div>
+        <div class="bc" style="background-image:url('MEM_BANNER_3')"></div>
+        <div class="bc" style="background-image:url('MEM_BANNER_4')"></div>
+        <div class="bc" style="background-image:url('MEM_BANNER_5')"></div>
       </div>
       <div class="banner-overlay"></div>
       <div class="banner-content"><div class="page-tag">Members Only</div><h2 class="page-title">Our <em>Memories</em></h2></div>
     </div>
     <div class="gallery-section">
       <div class="gallery-grid">
-        <div class="photo-card wide" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">The beginning of everything</div></div>
-        <div class="photo-card tall" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Moonlit moments</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI2NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjMTE0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzZhMDAxYSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFjMDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWMwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">By candlelight</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2MzNiYiIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzIyMDA0MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Timeless</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">My favourite night</div></div>
+        <div class="photo-card wide" style="background-image:url('MEM_PHOTO_1')">
+          <div class="ph"><div class="ph-title">Memories Photo 1</div><div class="ph-url">Replace MEM_PHOTO_1</div></div>
+          <div class="card-caption">The beginning of everything</div>
+        </div>
+        <div class="photo-card tall" style="background-image:url('MEM_PHOTO_2')">
+          <div class="ph"><div class="ph-title">Memories Photo 2</div><div class="ph-url">Replace MEM_PHOTO_2</div></div>
+          <div class="card-caption">Moonlit moments</div>
+        </div>
+        <div class="photo-card" style="background-image:url('MEM_PHOTO_3')">
+          <div class="ph"><div class="ph-title">Memories Photo 3</div><div class="ph-url">Replace MEM_PHOTO_3</div></div>
+          <div class="card-caption">By candlelight</div>
+        </div>
+        <div class="photo-card" style="background-image:url('MEM_PHOTO_4')">
+          <div class="ph"><div class="ph-title">Memories Photo 4</div><div class="ph-url">Replace MEM_PHOTO_4</div></div>
+          <div class="card-caption">Timeless</div>
+        </div>
+        <div class="photo-card" style="background-image:url('MEM_PHOTO_5')">
+          <div class="ph"><div class="ph-title">Memories Photo 5</div><div class="ph-url">Replace MEM_PHOTO_5</div></div>
+          <div class="card-caption">My favourite night</div>
+        </div>
       </div>
     </div>
     <div class="site-footer"><div class="footer-logo">for Kate</div><button class="btn btn-ghost" onclick="lockPage('memories')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button></div>
   </div>
 </div>
 
-<!-- JUST US (PROTECTED) -->
+<!-- ===== JUST US (PROTECTED) ===== -->
 <div class="page" id="page-intimate">
   <div id="intimate-lock" class="locked-view">
     <div class="lock-glyph">&#128272;</div>
@@ -304,28 +360,40 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   <div id="intimate-open" style="display:none">
     <div class="page-banner">
       <div class="banner-mosaic">
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3MzM4OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzJhMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0MjJhYSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzE4MDAzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA2MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDYwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI2MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4MjI1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzI4MDAyMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk5MTEzMyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzM1MDAxNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBjMDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGMwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2MzNiYiIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzIyMDA0MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+        <div class="bc" style="background-image:url('INT_BANNER_1')"></div>
+        <div class="bc" style="background-image:url('INT_BANNER_2')"></div>
+        <div class="bc" style="background-image:url('INT_BANNER_3')"></div>
+        <div class="bc" style="background-image:url('INT_BANNER_4')"></div>
+        <div class="bc" style="background-image:url('INT_BANNER_5')"></div>
       </div>
       <div class="banner-overlay"></div>
       <div class="banner-content"><div class="page-tag">Private</div><h2 class="page-title">Just <em>Us</em></h2></div>
     </div>
     <div class="gallery-section">
       <div class="gallery-grid">
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3MzM4OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzJhMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Ours alone</div></div>
-        <div class="photo-card wide" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0MjJhYSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzE4MDAzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA2MDAxMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDYwMDEwIi8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Forever yours</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI2MCUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4MjI1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzI4MDAyMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDgwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Still burning</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk5MTEzMyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzM1MDAxNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBjMDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGMwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Only you</div></div>
+        <div class="photo-card" style="background-image:url('INT_PHOTO_1')">
+          <div class="ph"><div class="ph-title">Just Us Photo 1</div><div class="ph-url">Replace INT_PHOTO_1</div></div>
+          <div class="card-caption">Ours alone</div>
+        </div>
+        <div class="photo-card wide" style="background-image:url('INT_PHOTO_2')">
+          <div class="ph"><div class="ph-title">Just Us Photo 2</div><div class="ph-url">Replace INT_PHOTO_2</div></div>
+          <div class="card-caption">Forever yours</div>
+        </div>
+        <div class="photo-card" style="background-image:url('INT_PHOTO_3')">
+          <div class="ph"><div class="ph-title">Just Us Photo 3</div><div class="ph-url">Replace INT_PHOTO_3</div></div>
+          <div class="card-caption">Still burning</div>
+        </div>
+        <div class="photo-card" style="background-image:url('INT_PHOTO_4')">
+          <div class="ph"><div class="ph-title">Just Us Photo 4</div><div class="ph-url">Replace INT_PHOTO_4</div></div>
+          <div class="card-caption">Only you</div>
+        </div>
       </div>
     </div>
     <div class="site-footer"><div class="footer-logo">for Kate</div><button class="btn btn-ghost" onclick="lockPage('intimate')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button></div>
   </div>
 </div>
 
-<!-- LOVE LETTERS (PROTECTED) -->
+<!-- ===== LOVE LETTERS (PROTECTED) ===== -->
 <div class="page" id="page-letters">
   <div id="letters-lock" class="locked-view">
     <div class="lock-glyph">&#128140;</div>
@@ -336,21 +404,33 @@ nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-i
   <div id="letters-open" style="display:none">
     <div class="page-banner">
       <div class="banner-mosaic">
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M0MTU1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzUwMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTYwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
-        <div class="bc" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4MTc1ZCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzdhMDAzMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMWEwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4='"></div>
+        <div class="bc" style="background-image:url('LET_BANNER_1')"></div>
+        <div class="bc" style="background-image:url('LET_BANNER_2')"></div>
+        <div class="bc" style="background-image:url('LET_BANNER_3')"></div>
+        <div class="bc" style="background-image:url('LET_BANNER_4')"></div>
+        <div class="bc" style="background-image:url('LET_BANNER_5')"></div>
       </div>
       <div class="banner-overlay"></div>
       <div class="banner-content"><div class="page-tag">Private</div><h2 class="page-title">Love <em>Letters</em></h2></div>
     </div>
     <div class="gallery-section">
       <div class="gallery-grid">
-        <div class="photo-card wide" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI1MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhNDRjYyIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzNkMDA1NSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDAxNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMGQwMDE1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Everything I could never say</div></div>
-        <div class="photo-card tall" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RkMTE1OCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzVhMDAyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4MDAwNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTgwMDA2Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Written in starlight</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI1NSUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JiMTE0MCIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzRhMDAxOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1MDAwNSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTUwMDA1Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">My dearest Kate</div></div>
-        <div class="photo-card " style="background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI0NSUiIGN5PSI2MCUiIHI9Ijc1JSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M0MTU1NSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjQ1JSIgc3RvcC1jb2xvcj0iIzUwMDAyNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MDAwOCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMTYwMDA4Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=')" ><div class="card-caption">Always and forever</div></div>
+        <div class="photo-card wide" style="background-image:url('LET_PHOTO_1')">
+          <div class="ph"><div class="ph-title">Letters Photo 1</div><div class="ph-url">Replace LET_PHOTO_1</div></div>
+          <div class="card-caption">Everything I could never say</div>
+        </div>
+        <div class="photo-card tall" style="background-image:url('LET_PHOTO_2')">
+          <div class="ph"><div class="ph-title">Letters Photo 2</div><div class="ph-url">Replace LET_PHOTO_2</div></div>
+          <div class="card-caption">Written in starlight</div>
+        </div>
+        <div class="photo-card" style="background-image:url('LET_PHOTO_3')">
+          <div class="ph"><div class="ph-title">Letters Photo 3</div><div class="ph-url">Replace LET_PHOTO_3</div></div>
+          <div class="card-caption">My dearest Kate</div>
+        </div>
+        <div class="photo-card" style="background-image:url('LET_PHOTO_4')">
+          <div class="ph"><div class="ph-title">Letters Photo 4</div><div class="ph-url">Replace LET_PHOTO_4</div></div>
+          <div class="card-caption">Always and forever</div>
+        </div>
       </div>
     </div>
     <div class="site-footer"><div class="footer-logo">for Kate</div><button class="btn btn-ghost" onclick="lockPage('letters')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button></div>
@@ -494,7 +574,7 @@ function lbRender() {
   const bg = card.style.backgroundImage;
   const cap = card.querySelector('.card-caption');
   document.getElementById('lb-image').style.backgroundImage = bg;
-  document.getElementById('lb-caption').textContent = cap ? cap.textContent : '';
+  document.getElementById('lb-caption').textContent = cap ? cap.textContent.trim() : '';
   document.getElementById('lb-count').textContent = (lbIdx+1)+' / '+lbCards.length;
   document.getElementById('lb-prev').classList.toggle('hide', lbIdx===0);
   document.getElementById('lb-next').classList.toggle('hide', lbIdx===lbCards.length-1);
