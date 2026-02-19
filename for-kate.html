@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Kate — Always & Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+<style>
+  /* ================================================================
+     DESIGN TOKENS
+     ================================================================ */
+  :root {
+    --pink:        #e8175d;
+    --pink-deep:   #a50f42;
+    --pink-glow:   rgba(232,23,93,0.4);
+    --pink-soft:   rgba(232,23,93,0.15);
+    --black:       #060407;
+    --dark:        #0e090c;
+    --card-bg:     #130a0f;
+    --white:       #f7eef2;
+    --muted:       #7a6570;
+    --gold:        #c9a96e;
+    --gold-glow:   rgba(201,169,110,0.3);
+  }
+
+  /* ================================================================
+     RESET & BASE
+     ================================================================ */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grain overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+  }
+
+  /* ================================================================
+     NAVIGATION
+     ================================================================ */
+  nav {
+    position: fixed; top:0; left:0; right:0;
+    z-index: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 3.5rem;
+    background: linear-gradient(to bottom, rgba(6,4,7,0.97) 0%, rgba(6,4,7,0.8) 100%);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232,23,93,0.15);
+    transition: padding 0.4s;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-shadow: 0 0 20px var(--gold-glow);
+    user-select: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links li { position: relative; }
+
+  .nav-links li a,
+  .nav-links li button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 100;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.5rem 1.2rem;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .nav-links li a:hover,
+  .nav-links li button:hover,
+  .nav-links li a.active,
+  .nav-links li button.active {
+    color: var(--pink);
+  }
+
+  .nav-divider {
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.08);
+    margin: 0 0.3rem;
+  }
+
+  .lock-badge {
+    font-size: 0.55rem;
+    opacity: 0.5;
+  }
+
+  /* dropdown for grouped sections */
+  .nav-dropdown {
+    position: relative;
+  }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13,9,12,0.97);
+    border: 1px solid rgba(232,23,93,0.2);
+    min-width: 180px;
+    padding: 0.5rem 0;
+    backdrop-filter: blur(20px);
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu button {
+    display: flex !important;
+    width: 100%;
+    padding: 0.65rem 1.4rem !important;
+    font-size: 0.65rem !important;
+  }
+  .nav-dropdown-menu button:hover { background: rgba(232,23,93,0.08); }
+
+  /* ================================================================
+     PAGE SYSTEM
+     ================================================================ */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ================================================================
+     HERO — HOME
+     ================================================================ */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* Cinematic photo mosaic background */
+  .hero-bg-mosaic {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+    opacity: 0.35;
+    filter: saturate(0.7) brightness(0.5);
+    transform: scale(1.05);
+    transition: transform 20s ease;
+  }
+  .hero-bg-mosaic:hover { transform: scale(1.08); }
+
+  .mosaic-cell {
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+
+  /* Dark cinematic overlays */
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 55%, rgba(232,23,93,0.22) 0%, transparent 65%),
+      linear-gradient(to bottom, rgba(6,4,7,0.55) 0%, rgba(6,4,7,0.1) 40%, rgba(6,4,7,0.1) 60%, rgba(6,4,7,0.8) 100%),
+      linear-gradient(to right, rgba(6,4,7,0.6) 0%, transparent 30%, transparent 70%, rgba(6,4,7,0.6) 100%);
+  }
+
+  /* Decorative lines */
+  .hero-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,23,93,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,23,93,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center;
+    animation: heroFadeIn 1.8s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.8rem;
+    opacity: 0.8;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 14vw, 11rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.88;
+    color: var(--white);
+    text-shadow: 0 0 80px rgba(232,23,93,0.35), 0 2px 40px rgba(0,0,0,0.8);
+  }
+
+  .hero-title .accent { color: var(--pink); font-weight: 600; }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(247,238,242,0.55);
+    margin-top: 1.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-divider {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--pink), transparent);
+    margin: 2.5rem auto;
+    opacity: 0.7;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.6rem;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--muted);
+    animation: pulse 3s ease infinite;
+  }
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--muted));
+  }
+
+  /* ================================================================
+     BUTTONS
+     ================================================================ */
+  .btn {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--pink);
+    color: var(--black);
+    padding: 0.9rem 2.4rem;
+    box-shadow: 0 0 30px rgba(232,23,93,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .btn-primary:hover {
+    background: #f02070;
+    box-shadow: 0 0 55px rgba(232,23,93,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2.2rem;
+    border: 1px solid rgba(247,238,242,0.2);
+  }
+  .btn-ghost:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    box-shadow: 0 0 20px rgba(232,23,93,0.15);
+  }
+
+  /* ================================================================
+     GALLERY PAGES
+     ================================================================ */
+  .page-hero {
+    position: relative;
+    height: 45vh; min-height: 280px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding-bottom: 3rem;
+    overflow: hidden;
+    margin-top: 64px;
+  }
+
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    filter: saturate(0.6) brightness(0.35);
+    transform: scale(1.03);
+  }
+
+  .page-hero-cell {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .page-hero-overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(6,4,7,0.3) 0%, rgba(6,4,7,0.85) 100%),
+      radial-gradient(ellipse 60% 70% at 50% 80%, rgba(232,23,93,0.18) 0%, transparent 70%);
+  }
+
+  .page-hero-content {
+    position: relative; z-index: 5;
+    text-align: center;
+  }
+
+  .page-tag {
+    display: inline-block;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--pink);
+    border: 1px solid rgba(232,23,93,0.4);
+    padding: 0.25rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(232,23,93,0.3);
+  }
+  .page-title em { color: var(--pink); font-weight: 600; }
+
+  /* ================================================================
+     PHOTO GRID
+     ================================================================ */
+  .gallery-section {
+    padding: 3rem 3.5rem 5rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 4px;
+  }
+
+  /* Masonry-feel with varied sizes */
+  .gallery-grid .span-2 { grid-column: span 2; }
+  .gallery-grid .tall    { grid-row: span 2; }
+
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--card-bg);
+    cursor: pointer;
+    aspect-ratio: 4/3;
+  }
+  .photo-card.tall { aspect-ratio: 3/4; }
+  .photo-card.span-2 { aspect-ratio: 16/7; }
+
+  .photo-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: saturate(0.85) brightness(0.9);
+  }
+  .photo-card:hover img {
+    transform: scale(1.06);
+    filter: saturate(1.1) brightness(1);
+  }
+
+  /* Placeholder state (before imgBB links added) */
+  .photo-placeholder-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.6rem;
+    background: var(--card-bg);
+    border: 1px dashed rgba(232,23,93,0.25);
+  }
+
+  .ph-emoji { font-size: 2rem; opacity: 0.25; }
+
+  .ph-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232,23,93,0.4);
+    text-align: center;
+    max-width: 160px;
+    line-height: 1.6;
+  }
+
+  .ph-url-hint {
+    font-size: 0.55rem;
+    color: rgba(122,101,112,0.5);
+    font-style: italic;
+    text-align: center;
+    max-width: 200px;
+    line-height: 1.5;
+  }
+
+  /* Hover overlay */
+  .photo-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(6,4,7,0.75) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex; align-items: flex-end;
+    padding: 1.2rem;
+  }
+  .photo-card:hover .photo-card-overlay { opacity: 1; }
+
+  .photo-card-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(247,238,242,0.85);
+    transform: translateY(5px);
+    transition: transform 0.3s;
+  }
+  .photo-card:hover .photo-card-caption { transform: translateY(0); }
+
+  /* ================================================================
+     ADD MORE SECTION — template for new sections
+     ================================================================ */
+  .add-section-hint {
+    margin: 0 3.5rem 2rem;
+    padding: 1.5rem 2rem;
+    border: 1px dashed rgba(232,23,93,0.15);
+    display: flex; align-items: center; gap: 1.2rem;
+    opacity: 0.5;
+  }
+  .add-section-hint p {
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    color: var(--muted); line-height: 1.7;
+  }
+  .add-section-hint span { font-size: 1.5rem; }
+
+  /* ================================================================
+     LOCKED STATE
+     ================================================================ */
+  .locked-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    padding-top: 100px;
+  }
+
+  .lock-glyph {
+    font-size: 3rem;
+    opacity: 0.2;
+    filter: grayscale(1);
+  }
+
+  .locked-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1;
+  }
+  .locked-title em { color: var(--pink); font-weight: 600; }
+
+  .locked-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    max-width: 300px;
+    line-height: 1.8;
+  }
+
+  /* ================================================================
+     MODAL
+     ================================================================ */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(6,4,7,0.93);
+    backdrop-filter: blur(12px);
+    z-index: 900;
+    align-items: center; justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal-box {
+    background: var(--dark);
+    border: 1px solid rgba(232,23,93,0.25);
+    box-shadow: 0 0 100px rgba(232,23,93,0.15), 0 40px 80px rgba(0,0,0,0.8);
+    padding: 3.5rem;
+    width: 100%; max-width: 420px;
+    position: relative;
+    animation: modalIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  .modal-close-btn {
+    position: absolute; top: 1.2rem; right: 1.4rem;
+    background: none; border: none;
+    color: var(--muted); font-size: 1.3rem;
+    cursor: pointer; transition: color 0.2s;
+    line-height: 1;
+  }
+  .modal-close-btn:hover { color: var(--pink); }
+
+  .modal-eyebrow {
+    font-size: 0.58rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--pink);
+    margin-bottom: 1rem; opacity: 0.8;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300; font-style: italic;
+    line-height: 1; margin-bottom: 0.5rem;
+  }
+  .modal-title em { color: var(--pink); font-weight: 600; }
+
+  .modal-desc {
+    font-size: 0.68rem; color: var(--muted);
+    letter-spacing: 0.05em; line-height: 1.8;
+    margin-bottom: 2.2rem;
+  }
+
+  .field { margin-bottom: 1.2rem; }
+
+  .field label {
+    display: block;
+    font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .field input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 300;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    letter-spacing: 0.05em;
+  }
+  .field input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(232,23,93,0.1);
+  }
+
+  .modal-error {
+    font-size: 0.65rem; color: var(--pink);
+    letter-spacing: 0.05em; margin-bottom: 1rem;
+    display: none;
+  }
+  .modal-error.show { display: block; }
+
+  .btn-full { width: 100%; text-align: center; }
+
+  .modal-footer {
+    margin-top: 2rem; padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.6rem; color: rgba(122,101,112,0.5);
+    letter-spacing: 0.05em; text-align: center;
+    line-height: 1.8;
+  }
+
+  /* ================================================================
+     FOOTER
+     ================================================================ */
+  .site-footer {
+    border-top: 1px solid rgba(232,23,93,0.1);
+    padding: 2.5rem 3.5rem;
+    display: flex; justify-content: space-between;
+    align-items: center;
+    background: rgba(6,4,7,0.6);
+  }
+
+  .footer-wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 300;
+    font-size: 1.1rem; color: var(--gold);
+    opacity: 0.6;
+  }
+
+  .footer-right {
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+
+  .footer-right p {
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    color: rgba(122,101,112,0.5);
+  }
+
+  /* ================================================================
+     ANIMATIONS
+     ================================================================ */
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 0.9; }
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links li a, .nav-links li button { padding: 0.4rem 0.6rem; font-size: 0.6rem; }
+    .gallery-section { padding: 2rem 1rem 4rem; }
+    .gallery-grid .span-2 { grid-column: span 1; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .site-footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .modal-box { padding: 2.5rem 1.8rem; margin: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAVIGATION
+     ================================================================ -->
+<nav>
+  <div class="nav-logo" onclick="goHome()">for <em>Kate</em></div>
+
+  <ul class="nav-links">
+    <!-- PUBLIC SECTIONS -->
+    <li><a href="#" id="nav-home" class="active" onclick="showPage('home');return false;">Home</a></li>
+    <div class="nav-divider"></div>
+    <li><a href="#" id="nav-events" onclick="showPage('events');return false;">Events</a></li>
+    <div class="nav-divider"></div>
+    <li><a href="#" id="nav-adventures" onclick="showPage('adventures');return false;">Adventures</a></li>
+    <!-- ADD MORE PUBLIC SECTIONS: copy the 3 lines above and change the id/name -->
+    <div class="nav-divider"></div>
+
+    <!-- PROTECTED SECTIONS — dropdown -->
+    <li class="nav-dropdown">
+      <button>Private &#9662;</button>
+      <div class="nav-dropdown-menu">
+        <button onclick="tryProtected('memories','modal-memories')">Our Memories 🔒</button>
+        <button onclick="tryProtected('intimate','modal-intimate')">Just Us 🔒</button>
+        <button onclick="tryProtected('letters','modal-letters')">Love Letters 🔒</button>
+        <!-- ADD MORE PROTECTED: copy button above, give new page id + modal id -->
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- ================================================================
+     PAGE: HOME
+     ================================================================ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+
+    <!-- Background mosaic — replace src="" with imgBB URLs -->
+    <div class="hero-bg-mosaic">
+      <!-- ROW 1 -->
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_1'); background-color:#1a0610;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_2'); background-color:#200815;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_3'); background-color:#180510;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_4'); background-color:#130410;"></div>
+      <!-- ROW 2 -->
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_5'); background-color:#200810;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_6'); background-color:#1a0a14;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_7'); background-color:#160812;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_8'); background-color:#1c0a14;"></div>
+      <!-- ROW 3 -->
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_9'); background-color:#180610;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_10'); background-color:#1e0a14;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_11'); background-color:#150510;"></div>
+      <div class="mosaic-cell" style="background-image:url('YOUR_IMGBB_URL_12'); background-color:#1a0812;"></div>
+    </div>
+
+    <div class="hero-overlay"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Valentine's Day · February 14</p>
+      <h1 class="hero-title">For<br><span class="accent">Kate</span></h1>
+      <p class="hero-subtitle">"Every photograph is a certificate of presence."</p>
+      <div class="hero-divider"></div>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="showPage('events')">Open the Album</button>
+        <button class="btn btn-ghost" onclick="tryProtected('memories','modal-memories')">Our Private World 🔒</button>
+      </div>
+    </div>
+
+    <div class="scroll-hint">Scroll</div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: EVENTS (PUBLIC)
+     ================================================================ -->
+<div class="page" id="page-events">
+  <div class="page-hero">
+    <div class="page-hero-bg">
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_1'); background-color:#1a0610;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_3'); background-color:#180510;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_5'); background-color:#200810;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_7'); background-color:#160812;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_9'); background-color:#180610;"></div>
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="page-tag">Public Gallery</div>
+      <h2 class="page-title">Events &amp; <em>Celebrations</em></h2>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-grid">
+
+      <!-- PHOTO CARD — replace src with imgBB URL, update caption -->
+      <div class="photo-card span-2">
+        <img src="YOUR_IMGBB_URL_1" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🎉</div>
+          <div class="ph-label">Event Photo 1</div>
+          <div class="ph-url-hint">Replace src="YOUR_IMGBB_URL_1"<br>with your imgBB link</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">New Year's Eve</span></div>
+      </div>
+
+      <div class="photo-card tall">
+        <img src="YOUR_IMGBB_URL_2" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🥂</div>
+          <div class="ph-label">Event Photo 2</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_2"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">A night to remember</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_3" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🎂</div>
+          <div class="ph-label">Event Photo 3</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_3"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Celebrations</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_4" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🎊</div>
+          <div class="ph-label">Event Photo 4</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_4"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Together always</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_5" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">✨</div>
+          <div class="ph-label">Event Photo 5</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_5"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Magic moments</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_6" alt="Event photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌹</div>
+          <div class="ph-label">Event Photo 6</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_6"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Rose-tinted evenings</span></div>
+      </div>
+      <!-- ADD MORE CARDS: copy any photo-card block above and update URL + caption -->
+
+    </div>
+  </div>
+
+  <div class="add-section-hint">
+    <span>＋</span>
+    <p>To add more photos to this section, copy any photo-card block above and update the imgBB URL and caption text.</p>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-wordmark">for Kate</div>
+    <div class="footer-right">
+      <p>Events &amp; Celebrations</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: ADVENTURES (PUBLIC)
+     ================================================================ -->
+<div class="page" id="page-adventures">
+  <div class="page-hero">
+    <div class="page-hero-bg">
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_A1'); background-color:#0e1018;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_A2'); background-color:#0c1020;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_A3'); background-color:#0e1018;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_A4'); background-color:#101018;"></div>
+      <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_A5'); background-color:#0c0e18;"></div>
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="page-tag">Public Gallery</div>
+      <h2 class="page-title">Our <em>Adventures</em></h2>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-grid">
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_A1" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌍</div>
+          <div class="ph-label">Adventure Photo 1</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A1"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Wandering together</span></div>
+      </div>
+
+      <div class="photo-card span-2">
+        <img src="YOUR_IMGBB_URL_A2" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌅</div>
+          <div class="ph-label">Adventure Photo 2</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A2"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">Golden hour</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_A3" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🏔️</div>
+          <div class="ph-label">Adventure Photo 3</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A3"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">On top of the world</span></div>
+      </div>
+
+      <div class="photo-card tall">
+        <img src="YOUR_IMGBB_URL_A4" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌊</div>
+          <div class="ph-label">Adventure Photo 4</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A4"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">By the sea</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_A5" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌸</div>
+          <div class="ph-label">Adventure Photo 5</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A5"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">In bloom</span></div>
+      </div>
+
+      <div class="photo-card">
+        <img src="YOUR_IMGBB_URL_A6" alt="Adventure photo" onerror="this.style.display='none'">
+        <div class="photo-placeholder-inner">
+          <div class="ph-emoji">🌃</div>
+          <div class="ph-label">Adventure Photo 6</div>
+          <div class="ph-url-hint">src="YOUR_IMGBB_URL_A6"</div>
+        </div>
+        <div class="photo-card-overlay"><span class="photo-card-caption">City nights</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="add-section-hint">
+    <span>＋</span>
+    <p>Add more adventure photos by duplicating any photo-card block above.</p>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-wordmark">for Kate</div>
+    <div class="footer-right"><p>Our Adventures</p></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: OUR MEMORIES (PROTECTED — Level 1)
+     ================================================================ -->
+<div class="page" id="page-memories">
+  <div id="memories-locked" class="locked-view">
+    <div class="lock-glyph">🔒</div>
+    <h2 class="locked-title">Our <em>Memories</em></h2>
+    <p class="locked-sub">This gallery holds something precious. Enter to remember.</p>
+    <button class="btn btn-primary" onclick="openModal('modal-memories')">Enter</button>
+  </div>
+  <div id="memories-unlocked" style="display:none">
+    <div class="page-hero">
+      <div class="page-hero-bg">
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_M1'); background-color:#1a0610;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_M2'); background-color:#200816;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_M3'); background-color:#180510;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_M4'); background-color:#130414;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_M5'); background-color:#1c0812;"></div>
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-tag">Members Only</div>
+        <h2 class="page-title">Our <em>Memories</em></h2>
+      </div>
+    </div>
+    <div class="gallery-section">
+      <div class="gallery-grid">
+        <div class="photo-card span-2">
+          <img src="YOUR_IMGBB_URL_M1" alt="Memory" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">💖</div><div class="ph-label">Memory Photo 1</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_M1"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">The beginning of everything</span></div>
+        </div>
+        <div class="photo-card tall">
+          <img src="YOUR_IMGBB_URL_M2" alt="Memory" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🌙</div><div class="ph-label">Memory Photo 2</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_M2"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Moonlit moments</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_M3" alt="Memory" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🕯️</div><div class="ph-label">Memory Photo 3</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_M3"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">By candlelight</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_M4" alt="Memory" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🥀</div><div class="ph-label">Memory Photo 4</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_M4"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Timeless</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_M5" alt="Memory" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">⭐</div><div class="ph-label">Memory Photo 5</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_M5"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">My favourite night</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer">
+      <div class="footer-wordmark">for Kate</div>
+      <div class="footer-right">
+        <button class="btn btn-ghost" onclick="lock('memories')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: JUST US (PROTECTED — Level 2)
+     ================================================================ -->
+<div class="page" id="page-intimate">
+  <div id="intimate-locked" class="locked-view">
+    <div class="lock-glyph">🔐</div>
+    <h2 class="locked-title">Just <em>Us</em></h2>
+    <p class="locked-sub">The most private corner of this album. For your eyes only.</p>
+    <button class="btn btn-primary" onclick="openModal('modal-intimate')">Enter</button>
+  </div>
+  <div id="intimate-unlocked" style="display:none">
+    <div class="page-hero">
+      <div class="page-hero-bg">
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_I1'); background-color:#1a0610;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_I2'); background-color:#200816;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_I3'); background-color:#180510;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_I4'); background-color:#130414;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_I5'); background-color:#1c0812;"></div>
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-tag">Private</div>
+        <h2 class="page-title">Just <em>Us</em></h2>
+      </div>
+    </div>
+    <div class="gallery-section">
+      <div class="gallery-grid">
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_I1" alt="Private" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">💕</div><div class="ph-label">Private Photo 1</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_I1"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Ours alone</span></div>
+        </div>
+        <div class="photo-card span-2">
+          <img src="YOUR_IMGBB_URL_I2" alt="Private" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🌹</div><div class="ph-label">Private Photo 2</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_I2"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Forever yours</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_I3" alt="Private" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🔥</div><div class="ph-label">Private Photo 3</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_I3"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Still burning</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_I4" alt="Private" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">💋</div><div class="ph-label">Private Photo 4</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_I4"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Only you</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer">
+      <div class="footer-wordmark">for Kate</div>
+      <div class="footer-right">
+        <button class="btn btn-ghost" onclick="lock('intimate')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: LOVE LETTERS (PROTECTED — Level 3)
+     ================================================================ -->
+<div class="page" id="page-letters">
+  <div id="letters-locked" class="locked-view">
+    <div class="lock-glyph">💌</div>
+    <h2 class="locked-title">Love <em>Letters</em></h2>
+    <p class="locked-sub">Words written only for you, Kate.</p>
+    <button class="btn btn-primary" onclick="openModal('modal-letters')">Enter</button>
+  </div>
+  <div id="letters-unlocked" style="display:none">
+    <div class="page-hero">
+      <div class="page-hero-bg">
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_L1'); background-color:#1a0610;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_L2'); background-color:#200816;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_L3'); background-color:#180510;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_L4'); background-color:#130414;"></div>
+        <div class="page-hero-cell" style="background-image:url('YOUR_IMGBB_URL_L5'); background-color:#1c0812;"></div>
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-tag">Private</div>
+        <h2 class="page-title">Love <em>Letters</em></h2>
+      </div>
+    </div>
+    <div class="gallery-section">
+      <div class="gallery-grid">
+        <div class="photo-card span-2">
+          <img src="YOUR_IMGBB_URL_L1" alt="Letter" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">💌</div><div class="ph-label">Letter / Photo 1</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_L1"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Everything I could never say</span></div>
+        </div>
+        <div class="photo-card tall">
+          <img src="YOUR_IMGBB_URL_L2" alt="Letter" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">✉️</div><div class="ph-label">Letter / Photo 2</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_L2"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Written in starlight</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_L3" alt="Letter" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">🖊️</div><div class="ph-label">Letter / Photo 3</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_L3"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">My dearest Kate</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="YOUR_IMGBB_URL_L4" alt="Letter" onerror="this.style.display='none'">
+          <div class="photo-placeholder-inner"><div class="ph-emoji">💝</div><div class="ph-label">Letter / Photo 4</div><div class="ph-url-hint">src="YOUR_IMGBB_URL_L4"</div></div>
+          <div class="photo-card-overlay"><span class="photo-card-caption">Always and forever</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer">
+      <div class="footer-wordmark">for Kate</div>
+      <div class="footer-right">
+        <button class="btn btn-ghost" onclick="lock('letters')" style="font-size:0.6rem;padding:0.5rem 1.2rem">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     MODALS
+     ================================================================ -->
+
+<!-- Memories Modal -->
+<div class="modal-backdrop" id="modal-memories">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-memories')">×</button>
+    <p class="modal-eyebrow">Members Access</p>
+    <h3 class="modal-title">Our <em>Memories</em></h3>
+    <p class="modal-desc">For those who hold a key to this chapter of our story.</p>
+    <div class="field"><label>Username</label><input type="text" id="m-user" placeholder="enter username" autocomplete="off"></div>
+    <div class="field"><label>Password</label><input type="password" id="m-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin('memories')"></div>
+    <div class="modal-error" id="m-err">Incorrect credentials — try again.</div>
+    <button class="btn btn-primary btn-full" onclick="doLogin('memories')">Enter Gallery</button>
+    <div class="modal-footer">
+      Hint — username: <strong>guest</strong> · password: <strong>memories2025</strong><br>
+      <em style="opacity:0.5">(Change these in the &lt;script&gt; section)</em>
+    </div>
+  </div>
+</div>
+
+<!-- Just Us Modal -->
+<div class="modal-backdrop" id="modal-intimate">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-intimate')">×</button>
+    <p class="modal-eyebrow">Private Access</p>
+    <h3 class="modal-title">Just <em>Us</em></h3>
+    <p class="modal-desc">The most intimate corner of this album. Your eyes only.</p>
+    <div class="field"><label>Username</label><input type="text" id="i-user" placeholder="enter username" autocomplete="off"></div>
+    <div class="field"><label>Password</label><input type="password" id="i-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin('intimate')"></div>
+    <div class="modal-error" id="i-err">Access denied — invalid credentials.</div>
+    <button class="btn btn-primary btn-full" onclick="doLogin('intimate')">Unlock</button>
+    <div class="modal-footer">
+      Hint — username: <strong>kate</strong> · password: <strong>justus2025</strong><br>
+      <em style="opacity:0.5">(Change these in the &lt;script&gt; section)</em>
+    </div>
+  </div>
+</div>
+
+<!-- Love Letters Modal -->
+<div class="modal-backdrop" id="modal-letters">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('modal-letters')">×</button>
+    <p class="modal-eyebrow">Deeply Private</p>
+    <h3 class="modal-title">Love <em>Letters</em></h3>
+    <p class="modal-desc">Words written only for you, Kate. Enter with care.</p>
+    <div class="field"><label>Username</label><input type="text" id="l-user" placeholder="enter username" autocomplete="off"></div>
+    <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin('letters')"></div>
+    <div class="modal-error" id="l-err">These words aren't ready for you yet.</div>
+    <button class="btn btn-primary btn-full" onclick="doLogin('letters')">Open Letters</button>
+    <div class="modal-footer">
+      Hint — username: <strong>darling</strong> · password: <strong>letters2025</strong><br>
+      <em style="opacity:0.5">(Change these in the &lt;script&gt; section)</em>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+// ---- CREDENTIALS — change these! ----
+const CREDENTIALS = {
+  memories: { user: 'guest',   pass: 'memories2025' },
+  intimate: { user: 'kate',    pass: 'justus2025'   },
+  letters:  { user: 'darling', pass: 'letters2025'  }
+};
+
+// Input prefix map
+const PREFIX = { memories:'m', intimate:'i', letters:'l' };
+
+// ---- SESSION (in-memory only) ----
+const unlocked = { memories:false, intimate:false, letters:false };
+
+// ---- NAVIGATION ----
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a, .nav-links > li > button').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goHome() { showPage('home'); }
+
+function tryProtected(name, modalId) {
+  showPage(name);
+  if (!unlocked[name]) openModal(modalId);
+}
+
+// ---- MODALS ----
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  const pre = PREFIX[id.replace('modal-','')];
+  if (pre) document.getElementById(pre + '-err').classList.remove('show');
+}
+
+// Close on backdrop click
+document.querySelectorAll('.modal-backdrop').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+});
+
+// ---- LOGIN ----
+function doLogin(section) {
+  const pre = PREFIX[section];
+  const u = document.getElementById(pre + '-user').value.trim();
+  const p = document.getElementById(pre + '-pass').value;
+  const creds = CREDENTIALS[section];
+
+  if (u === creds.user && p === creds.pass) {
+    unlocked[section] = true;
+    closeModal('modal-' + section);
+    document.getElementById(section + '-locked').style.display    = 'none';
+    document.getElementById(section + '-unlocked').style.display  = 'block';
+    document.getElementById(pre + '-pass').value = '';
+  } else {
+    document.getElementById(pre + '-err').classList.add('show');
+    document.getElementById(pre + '-pass').value = '';
+  }
+}
+
+// ---- LOGOUT ----
+function lock(section) {
+  unlocked[section] = false;
+  document.getElementById(section + '-unlocked').style.display = 'none';
+  document.getElementById(section + '-locked').style.display   = 'flex';
+  showPage('home');
+}
+</script>
+
+</body>
+</html>
